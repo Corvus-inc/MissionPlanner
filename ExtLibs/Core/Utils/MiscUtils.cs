@@ -7,11 +7,13 @@ namespace Core.Utils
 {
     public class MiscUtils
     {
-        public static T ParseEnum<T>(string name) {
+        public static T ParseEnum<T>(string name)
+        {
             return (T)Enum.Parse(typeof(T), name);
         }
 
-        public static void Swap<T>(ref T a, ref T b) {
+        public static void Swap<T>(ref T a, ref T b)
+        {
             T tmp = a;
             a = b;
             b = tmp;
@@ -52,7 +54,7 @@ namespace Core.Utils
                     }
                 }
             }
-            
+
             return aIndexb;
         }
 
@@ -70,10 +72,19 @@ namespace Core.Utils
             {
                 int aIndex = el.Key;
                 int bIndex = el.Value;
+                try
+                {
+                    var intemediateValue = Convert.ChangeType(ainfo[aIndex].GetValue(a), binfo[bIndex].PropertyType);
+                    ainfo[aIndex].SetValue(a, Convert.ChangeType(binfo[bIndex].GetValue(b), ainfo[aIndex].PropertyType));
+                    binfo[bIndex].SetValue(b, intemediateValue);
 
-                var intemediateValue = Convert.ChangeType(ainfo[aIndex].GetValue(a), binfo[bIndex].PropertyType);
-                ainfo[aIndex].SetValue(a, Convert.ChangeType(binfo[bIndex].GetValue(b), ainfo[aIndex].PropertyType));
-                binfo[bIndex].SetValue(b, intemediateValue);
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine($"Fail Convert. TextExeption: {ex.Message}");
+                }
+
             }
         }
     }
