@@ -73,7 +73,7 @@ namespace Core.Utils
 
                 var intemediateValue = Convert.ChangeType(ainfo[aIndex].GetValue(a), binfo[bIndex].PropertyType);
                 ainfo[aIndex].SetValue(a, Convert.ChangeType(binfo[bIndex].GetValue(b), ainfo[aIndex].PropertyType));
-                binfo[aIndex].SetValue(b, intemediateValue);
+                binfo[bIndex].SetValue(b, intemediateValue);
             }
         }
     }
